@@ -5,7 +5,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="./logo.svg" />
     <title>Bun + React</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="./frontend.tsx" async></script>
+    <style type="text/tailwindcss">
+      @layer base {
+        * {
+          @apply border-border outline-ring/50;
+        }
+        :root {
+          @apply font-sans;
+        }
+        body {
+          @apply grid place-items-center min-w-[320px] min-h-screen relative m-0 bg-background text-foreground;
+        }
+      }
+      
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        opacity: 0.05;
+        background: url("./logo.svg");
+        background-size: 256px;
+        transform: rotate(-12deg) scale(1.35);
+        animation: slide 30s linear infinite;
+        pointer-events: none;
+      }
+      
+      @keyframes slide {
+        from {
+          background-position: 0 0;
+        }
+        to {
+          background-position: 256px 224px;
+        }
+      }
+      
+      @keyframes spin {
+        from {
+          transform: rotate(0);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      
+      @media (prefers-reduced-motion) {
+        *,
+        ::before,
+        ::after {
+          animation: none !important;
+        }
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        darkMode: ['class'],
+        theme: {
+          extend: {
+            colors: {
+              background: 'oklch(var(--background) / <alpha-value>)',
+              foreground: 'oklch(var(--foreground) / <alpha-value>)',
+              card: 'oklch(var(--card) / <alpha-value>)',
+              'card-foreground': 'oklch(var(--card-foreground) / <alpha-value>)',
+              popover: 'oklch(var(--popover) / <alpha-value>)',
+              'popover-foreground': 'oklch(var(--popover-foreground) / <alpha-value>)',
+              primary: 'oklch(var(--primary) / <alpha-value>)',
+              'primary-foreground': 'oklch(var(--primary-foreground) / <alpha-value>)',
+              secondary: 'oklch(var(--secondary) / <alpha-value>)',
+              'secondary-foreground': 'oklch(var(--secondary-foreground) / <alpha-value>)',
+              muted: 'oklch(var(--muted) / <alpha-value>)',
+              'muted-foreground': 'oklch(var(--muted-foreground) / <alpha-value>)',
+              accent: 'oklch(var(--accent) / <alpha-value>)',
+              'accent-foreground': 'oklch(var(--accent-foreground) / <alpha-value>)',
+              destructive: 'oklch(var(--destructive) / <alpha-value>)',
+              border: 'oklch(var(--border) / <alpha-value>)',
+              input: 'oklch(var(--input) / <alpha-value>)',
+              ring: 'oklch(var(--ring) / <alpha-value>)',
+            },
+            borderRadius: {
+              lg: 'var(--radius)',
+              md: 'calc(var(--radius) - 2px)',
+              sm: 'calc(var(--radius) - 4px)',
+              xl: 'calc(var(--radius) + 4px)',
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      :root {
+        --radius: 0.625rem;
+        --background: 1 0 0;
+        --foreground: 0.145 0 0;
+        --card: 1 0 0;
+        --card-foreground: 0.145 0 0;
+        --popover: 1 0 0;
+        --popover-foreground: 0.145 0 0;
+        --primary: 0.205 0 0;
+        --primary-foreground: 0.985 0 0;
+        --secondary: 0.97 0 0;
+        --secondary-foreground: 0.205 0 0;
+        --muted: 0.97 0 0;
+        --muted-foreground: 0.556 0 0;
+        --accent: 0.97 0 0;
+        --accent-foreground: 0.205 0 0;
+        --destructive: 0.577 0.245 27.325;
+        --border: 0.922 0 0;
+        --input: 0.922 0 0;
+        --ring: 0.708 0 0;
+      }
+      
+      .dark {
+        --background: 0.145 0 0;
+        --foreground: 0.985 0 0;
+        --card: 0.205 0 0;
+        --card-foreground: 0.985 0 0;
+        --popover: 0.205 0 0;
+        --popover-foreground: 0.985 0 0;
+        --primary: 0.922 0 0;
+        --primary-foreground: 0.205 0 0;
+        --secondary: 0.269 0 0;
+        --secondary-foreground: 0.985 0 0;
+        --muted: 0.269 0 0;
+        --muted-foreground: 0.708 0 0;
+        --accent: 0.269 0 0;
+        --accent-foreground: 0.985 0 0;
+        --destructive: 0.704 0.191 22.216;
+        --border: 1 0 0 / 10%;
+        --input: 1 0 0 / 15%;
+        --ring: 0.556 0 0;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

@@ -4,7 +4,6 @@ import { Button } from "./components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { generateZpl, type LabelData } from "./lib/zpl/generator";
 import Papa from "papaparse";
-import "./index.css";
 
 export function App() {
   const printMutation = useMutation({
