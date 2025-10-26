@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { apiClient } from "@/lib/rpc/client";
 
 export function PrinterSelect() {
-  const { data, isPending } = useQuery({
+  const { data, isPending, isError, error } = useQuery({
     queryKey: ["printers"],
     queryFn: async () => {
       const res = await apiClient("/api/printers", {
@@ -23,11 +23,11 @@ export function PrinterSelect() {
   const printers = data?.printers;
 
   return (
-    <div>
+    <div className="space-y-2">
       <Label htmlFor="printer-select">Printer</Label>
-      <Select name="printer" disabled={isPending}>
+      <Select name="printer" disabled={isPending || isError}>
         <SelectTrigger id="printer-select">
-          <SelectValue placeholder={isPending ? "Loading printers..." : "Select a printer"} />
+          <SelectValue placeholder={isPending ? "Loading printers..." : isError ? "Error loading printers" : "Select a printer"} />
         </SelectTrigger>
         <SelectContent>
           {printers && printers.length > 0 ? (
@@ -43,6 +43,11 @@ export function PrinterSelect() {
           )}
         </SelectContent>
       </Select>
+      {isError && (
+        <p className="text-sm text-red-600">
+          Failed to load printers: {error instanceof Error ? error.message : "Unknown error"}
+        </p>
+      )}
     </div>
   );
 }
