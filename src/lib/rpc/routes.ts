@@ -40,9 +40,16 @@ const getPrinters = createEndpoint(
   {
     method: "GET",
   },
-  async () => {
-    const printers = listPrinters();
-    return { printers };
+  async (ctx) => {
+    try {
+      const printers = listPrinters();
+      return { printers };
+    } catch (error) {
+      throw ctx.error(500, { 
+        message: "Failed to list printers",
+        details: error instanceof Error ? error.message : "Unknown error"
+      });
+    }
   },
 );
 
