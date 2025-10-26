@@ -4,7 +4,7 @@ import { router } from "./lib/rpc/routes";
 
 const server = serve({
   routes: {
-    "/*": index,
+    "/": index,
   },
   fetch: router.handler,
 
