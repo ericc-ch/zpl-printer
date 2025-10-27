@@ -9,7 +9,6 @@ export interface LabelData {
   qrCode: string;
   line1: string;
   line2: string;
-  line3: string;
 }
 
 export interface GenerateZplOptions {
@@ -61,7 +60,6 @@ function generateLabelZpl(label: LabelData, xOffset: number): string {
   zpl += `^FO${xOffset + 20},19^BQN,2,${LABEL_SPECS.QR_MAGNIFICATION}^FDQA,${label.qrCode}^FS\n`;
   zpl += `^FO${xOffset + 190},34^A${LABEL_SPECS.TEXT_FONT}^FD${label.line1}^FS\n`;
   zpl += `^FO${xOffset + 190},74^A${LABEL_SPECS.TEXT_FONT}^FD${label.line2}^FS\n`;
-  zpl += `^FO${xOffset + 190},114^A${LABEL_SPECS.TEXT_FONT}^FD${label.line3}^FS\n`;
   
   return zpl;
 }

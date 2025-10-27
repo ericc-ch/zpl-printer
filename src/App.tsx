@@ -8,7 +8,12 @@ import Papa from "papaparse";
 export function App() {
   const printMutation = useMutation({
     mutationFn: async ({ zpl, printer }: { zpl: string; printer: string }) => {
-      const [hostname, shareName] = printer.split('\\\\')[1]?.split('\\') ?? [];
+      const parts = printer.split('\\\\');
+      const [hostname, shareName] = parts.length > 1 ? (parts[1] || '').split('\\') : [];
+
+      if (!hostname || !shareName) {
+        throw new Error('Invalid printer format. Expected \\\\hostname\\sharename');
+      }
       
       const response = await fetch('/api/print', {
         method: 'POST',
@@ -84,7 +89,6 @@ export function App() {
             qrCode: row[qrCodeIndex] || '',
             line1: row[label1Index] || '',
             line2: row[label2Index] || '',
-            line3: row[qrCodeIndex] || '',
           }));
 
         if (labels.length === 0) {
