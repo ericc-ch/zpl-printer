@@ -1,15 +1,6 @@
 import { useState } from "react";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { QrCodePreview } from "./QrCodePreview";
 import Papa from "papaparse";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 export function ZplGenerator() {
   const [csvData, setCsvData] = useState<{
@@ -67,8 +58,8 @@ export function ZplGenerator() {
     <div>
       <h2 className="text-2xl font-bold mb-4">Label Configuration</h2>
       <div>
-        <Label htmlFor="csvFile">CSV File</Label>
-        <Input
+        <label htmlFor="csvFile">CSV File</label>
+        <input
           id="csvFile"
           name="csvFile"
           type="file"
@@ -78,49 +69,37 @@ export function ZplGenerator() {
       </div>
       <div className="grid grid-cols-3 gap-4 my-4">
         <div>
-          <Label>QR Code Column</Label>
-          <Select name="qrCodeColumn" onValueChange={setQrCodeColumn}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select a column" />
-            </SelectTrigger>
-            <SelectContent>
-              {csvData.headers.map((header) => (
-                <SelectItem key={header} value={header}>
-                  {header}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <label>QR Code Column</label>
+          <select name="qrCodeColumn" onChange={(e) => setQrCodeColumn(e.target.value)}>
+            <option value="">Select a column</option>
+            {csvData.headers.map((header) => (
+              <option key={header} value={header}>
+                {header}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <Label>Label 1 Column</Label>
-          <Select name="label1Column" onValueChange={setLabel1Column}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select a column" />
-            </SelectTrigger>
-            <SelectContent>
-              {csvData.headers.map((header) => (
-                <SelectItem key={header} value={header}>
-                  {header}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <label>Label 1 Column</label>
+          <select name="label1Column" onChange={(e) => setLabel1Column(e.target.value)}>
+            <option value="">Select a column</option>
+            {csvData.headers.map((header) => (
+              <option key={header} value={header}>
+                {header}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
-          <Label>Label 2 Column</Label>
-          <Select name="label2Column" onValueChange={setLabel2Column}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select a column" />
-            </SelectTrigger>
-            <SelectContent>
-              {csvData.headers.map((header) => (
-                <SelectItem key={header} value={header}>
-                  {header}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <label>Label 2 Column</label>
+          <select name="label2Column" onChange={(e) => setLabel2Column(e.target.value)}>
+            <option value="">Select a column</option>
+            {csvData.headers.map((header) => (
+              <option key={header} value={header}>
+                {header}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <QrCodePreview
@@ -130,8 +109,8 @@ export function ZplGenerator() {
       />
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <Label htmlFor="columns">Columns</Label>
-          <Input
+          <label htmlFor="columns">Columns</label>
+          <input
             id="columns"
             name="columns"
             type="number"
