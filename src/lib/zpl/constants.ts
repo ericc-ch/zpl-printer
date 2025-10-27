@@ -12,9 +12,13 @@ export const LABEL_SPECS = {
   HORIZONTAL_GAP_DOTS: 24,
   VERTICAL_GAP_DOTS: 35,
   
-  QR_MAGNIFICATION: 7,
+  QR_MAGNIFICATION: 4,
   TEXT_FONT: 'A0N,28,28',
   ENCODING: 28,
+  
+  // Text wrapping configuration
+  TEXT_BLOCK_WIDTH: 200,
+  TEXT_MAX_LINES: 2,
 } as const;
 
 export function calculateColumnXOffset(columnIndex: number): number {

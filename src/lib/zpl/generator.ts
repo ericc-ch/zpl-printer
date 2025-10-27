@@ -57,9 +57,12 @@ function generateRowZpl(rowLabels: LabelData[], columns: number): string {
 function generateLabelZpl(label: LabelData, xOffset: number): string {
   let zpl = '';
   
+  // QR code positioned at left side
   zpl += `^FO${xOffset + 20},19^BQN,2,${LABEL_SPECS.QR_MAGNIFICATION}^FDQA,${label.qrCode}^FS\n`;
-  zpl += `^FO${xOffset + 190},34^A${LABEL_SPECS.TEXT_FONT}^FD${label.line1}^FS\n`;
-  zpl += `^FO${xOffset + 190},74^A${LABEL_SPECS.TEXT_FONT}^FD${label.line2}^FS\n`;
+  
+  // Text fields with wrapping support (^FB: width, max lines, line spacing, justification, hanging indent)
+  zpl += `^FO${xOffset + 190},34^FB${LABEL_SPECS.TEXT_BLOCK_WIDTH},${LABEL_SPECS.TEXT_MAX_LINES},0,L,0^A${LABEL_SPECS.TEXT_FONT}^FD${label.line1}^FS\n`;
+  zpl += `^FO${xOffset + 190},74^FB${LABEL_SPECS.TEXT_BLOCK_WIDTH},${LABEL_SPECS.TEXT_MAX_LINES},0,L,0^A${LABEL_SPECS.TEXT_FONT}^FD${label.line2}^FS\n`;
   
   return zpl;
 }
