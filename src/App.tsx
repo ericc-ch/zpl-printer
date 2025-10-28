@@ -9,7 +9,11 @@ export function App() {
   const printMutation = useMutation({
     mutationFn: async ({ zpl, printer }: { zpl: string; printer: string }) => {
       const parts = printer.split('\\\\');
-      const [hostname, shareName] = parts.length > 1 ? (parts[1] || '').split('\\') : [];
+      // const [hostname, shareName] = parts.length > 1 ? (parts[1] || '').split('\\') : [];
+
+      // console.log(printer);
+      const hostname = "V-DS1-G2-0005";
+      const shareName = "Zebra";
 
       if (!hostname || !shareName) {
         throw new Error('Invalid printer format. Expected \\\\hostname\\sharename');
