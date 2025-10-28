@@ -13,7 +13,7 @@ export const LABEL_SPECS = {
   VERTICAL_GAP_DOTS: 35,
 
   QR_MAGNIFICATION: 3,
-  TEXT_FONT: "A0N,28,28",
+  TEXT_FONT: "A0N,16,16",
   ENCODING: 28,
 } as const;
 
