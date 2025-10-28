@@ -30,12 +30,32 @@ function parsePrinterOutput(output: string): Printer[] {
 }
 
 export function listPrinters(): Printer[] {
-  const { stdout } = Bun.spawnSync({
-    cmd: ['cmd', '/c', 'wmic', 'printer', 'get', 'Name,PortName,Default']
-  });
-  
-  const text = stdout.toString();
-  return parsePrinterOutput(text);
+  try {
+    const { stdout } = Bun.spawnSync({
+      cmd: ['cmd', '/c', 'wmic', 'printer', 'get', 'Name,PortName,Default']
+    });
+    
+    const text = stdout.toString();
+    const printers = parsePrinterOutput(text);
+    
+    // If no printers found, return dummy printer for testing
+    if (printers.length === 0) {
+      return [{
+        name: 'DUMMY-PRINTER (No actual printer - ZPL logged to console)',
+        portName: 'DUMMY',
+        isDefault: true
+      }];
+    }
+    
+    return printers;
+  } catch (error) {
+    // If command fails (e.g., on non-Windows or no printers), return dummy printer
+    return [{
+      name: 'DUMMY-PRINTER (No actual printer - ZPL logged to console)',
+      portName: 'DUMMY',
+      isDefault: true
+    }];
+  }
 }
 
 export function findPrinterByName(name: string): Printer | null {

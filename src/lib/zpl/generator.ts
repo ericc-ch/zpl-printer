@@ -29,8 +29,13 @@ export function generateZpl(options: GenerateZplOptions): string {
   const rows = chunkArray(labels, columns);
   
   const zplBlocks = rows.map((rowLabels) => generateRowZpl(rowLabels, columns));
+  const zplCode = zplBlocks.join('');
   
-  return zplBlocks.join('');
+  console.log('=== Generated ZPL Code ===');
+  console.log(zplCode);
+  console.log('=== End ZPL Code ===');
+  
+  return zplCode;
 }
 
 function generateRowZpl(rowLabels: LabelData[], columns: number): string {
@@ -58,8 +63,8 @@ function generateLabelZpl(label: LabelData, xOffset: number): string {
   let zpl = '';
   
   zpl += `^FO${xOffset + 20},10^BQN,2,${LABEL_SPECS.QR_MAGNIFICATION}^FDQA,${label.qrCode}^FS\n`;
-  zpl += `^FO${xOffset + 190},34^A${LABEL_SPECS.TEXT_FONT}^FD${label.line1}^FS\n`;
-  zpl += `^FO${xOffset + 190},74^A${LABEL_SPECS.TEXT_FONT}^FD${label.line2}^FS\n`;
+  zpl += `^FO${xOffset + 190},54^A${LABEL_SPECS.TEXT_FONT}^FD${label.line1}^FS\n`;
+  zpl += `^FO${xOffset + 190},94^A${LABEL_SPECS.TEXT_FONT}^FB200,3,0,L,0^FD${label.line2}^FS\n`;
   
   return zpl;
 }

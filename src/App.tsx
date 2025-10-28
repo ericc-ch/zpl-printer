@@ -8,10 +8,31 @@ import Papa from "papaparse";
 export function App() {
   const printMutation = useMutation({
     mutationFn: async ({ zpl, printer }: { zpl: string; printer: string }) => {
-      const parts = printer.split('\\\\');
-      // const [hostname, shareName] = parts.length > 1 ? (parts[1] || '').split('\\') : [];
+      // Check if it's a dummy printer
+      if (printer.includes('DUMMY-PRINTER')) {
+        // Use DUMMY as both hostname and shareName for dummy mode
+        const hostname = "DUMMY";
+        const shareName = "DUMMY";
+        
+        const response = await fetch('/api/print', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            content: zpl,
+            options: { hostname, shareName },
+          }),
+        });
 
-      // console.log(printer);
+        if (!response.ok) {
+          throw new Error(`Print failed: ${response.statusText}`);
+        }
+
+        return response.json();
+      }
+      
+      // Real printer path - keep existing hardcoded values for production
       const hostname = "V-DS1-G2-0005";
       const shareName = "Zebra";
 

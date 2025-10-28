@@ -34,6 +34,10 @@ export async function printZPLContent(
   }
 
   try {
+    console.log('=== ZPL Code to Print ===');
+    console.log(contentValidation.data);
+    console.log('=== End ZPL Code ===');
+    
     const tempFile = await createTempZPLFile(contentValidation.data);
     return await printZPLFile(tempFile, optionsValidation.data);
   } catch (error) {
@@ -49,6 +53,19 @@ export async function printZPLFile(
   options: PrintOptions
 ): Promise<ZPLPrintResult> {
   try {
+    // Check if this is a dummy printer (no actual printing)
+    if (options.shareName === 'DUMMY' || options.hostname === 'DUMMY') {
+      console.log('=== DUMMY PRINTER MODE ===');
+      console.log('No actual print will be sent. ZPL code has been logged above.');
+      console.log('Copy the ZPL code and test it at: http://labelary.com/viewer.html');
+      console.log('=== END DUMMY PRINTER MODE ===');
+      
+      return {
+        success: true,
+        message: 'ZPL code generated successfully (DUMMY mode - check console for ZPL code)'
+      };
+    }
+    
     const printerPath = `\\\\${options.hostname}\\${options.shareName}`;
 
     const fileExists = await Bun.file(filePath).exists();
