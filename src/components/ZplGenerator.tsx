@@ -10,6 +10,7 @@ export function ZplGenerator() {
   const [qrCodeColumn, setQrCodeColumn] = useState<string | null>(null);
   const [label1Column, setLabel1Column] = useState<string | null>(null);
   const [label2Column, setLabel2Column] = useState<string | null>(null);
+  const [label3Column, setLabel3Column] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -40,6 +41,9 @@ export function ZplGenerator() {
   const label2HeaderIndex = label2Column
     ? csvData.headers.indexOf(label2Column)
     : -1;
+  const label3HeaderIndex = label3Column
+    ? csvData.headers.indexOf(label3Column)
+    : -1;
 
   const qrCodeData =
     (firstRow && qrCodeHeaderIndex !== -1
@@ -52,6 +56,10 @@ export function ZplGenerator() {
   const label2Data =
     (firstRow && label2HeaderIndex !== -1
       ? firstRow[label2HeaderIndex]
+      : null) ?? null;
+  const label3Data =
+    (firstRow && label3HeaderIndex !== -1
+      ? firstRow[label3HeaderIndex]
       : null) ?? null;
 
   return (
@@ -101,11 +109,23 @@ export function ZplGenerator() {
             ))}
           </select>
         </div>
+        <div>
+          <label>Label 3 Column</label>
+          <select name="label3Column" onChange={(e) => setLabel3Column(e.target.value)}>
+            <option value="">Select a column</option>
+            {csvData.headers.map((header) => (
+              <option key={header} value={header}>
+                {header}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <QrCodePreview
         qrCodeData={qrCodeData}
         label1Data={label1Data}
         label2Data={label2Data}
+        label3Data={label3Data}
       />
       <div className="grid grid-cols-2 gap-4">
         <div>

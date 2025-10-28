@@ -68,6 +68,7 @@ export function App() {
     const qrCodeColumn = formData.get("qrCodeColumn") as string;
     const label1Column = formData.get("label1Column") as string;
     const label2Column = formData.get("label2Column") as string;
+    const label3Column = formData.get("label3Column") as string;
     const columns = parseInt(formData.get("columns") as string, 10);
 
     if (!csvFile) {
@@ -80,7 +81,7 @@ export function App() {
       return;
     }
 
-    if (!qrCodeColumn || !label1Column || !label2Column) {
+    if (!qrCodeColumn || !label1Column || !label2Column || !label3Column) {
       alert("Please select all required columns");
       return;
     }
@@ -102,8 +103,9 @@ export function App() {
         const qrCodeIndex = headers.indexOf(qrCodeColumn);
         const label1Index = headers.indexOf(label1Column);
         const label2Index = headers.indexOf(label2Column);
+        const label3Index = headers.indexOf(label3Column);
 
-        if (qrCodeIndex === -1 || label1Index === -1 || label2Index === -1) {
+        if (qrCodeIndex === -1 || label1Index === -1 || label2Index === -1 || label3Index === -1) {
           alert("Selected columns not found in CSV");
           return;
         }
@@ -114,6 +116,7 @@ export function App() {
             qrCode: row[qrCodeIndex] || '',
             line1: row[label1Index] || '',
             line2: row[label2Index] || '',
+            line3: row[label3Index] || '',
           }));
 
         if (labels.length === 0) {
