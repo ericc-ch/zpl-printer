@@ -3,6 +3,7 @@ import {
   calculateColumnXOffset,
   calculatePrintWidth,
   calculateLabelLength,
+  calculateQRMagnification,
 } from "./constants";
 
 export interface LabelData {
@@ -62,8 +63,9 @@ function generateRowZpl(rowLabels: LabelData[], columns: number): string {
 
 function generateLabelZpl(label: LabelData, xOffset: number): string {
   let zpl = '';
+  const qrMagnification = calculateQRMagnification(label.qrCode.length);
   
-  zpl += `^FO${xOffset + 20},3^BQN,2,${LABEL_SPECS.QR_MAGNIFICATION}^FDQA,${label.qrCode}^FS\n`;
+  zpl += `^FO${xOffset + 20},3^BQN,2,${qrMagnification}^FDQA,${label.qrCode}^FS\n`;
   zpl += `^FO${xOffset + 190},46^A${LABEL_SPECS.TEXT_FONT}^FB200,5,0,L,0^FD${label.line1}^FS\n`;
   zpl += `^FO${xOffset + 190},86^A${LABEL_SPECS.TEXT_FONT}^FB200,5,0,L,0^FD${label.line2}^FS\n`;
   zpl += `^FO${xOffset + 190},126^A${LABEL_SPECS.TEXT_FONT}^FB200,5,0,L,0^FD${label.line3}^FS\n`;

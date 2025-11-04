@@ -34,3 +34,9 @@ export function calculatePrintWidth(columns: number): number {
 export function calculateLabelLength(): number {
   return LABEL_SPECS.LABEL_HEIGHT_DOTS + LABEL_SPECS.VERTICAL_GAP_DOTS;
 }
+
+export function calculateQRMagnification(qrCodeLength: number): number {
+  if (qrCodeLength >= 140) return 3;  // Long strings
+  if (qrCodeLength <= 90) return 4;   // Short strings  
+  return 3; // Default for medium strings
+}
