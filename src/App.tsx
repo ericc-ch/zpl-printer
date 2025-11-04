@@ -33,7 +33,7 @@ export function App() {
       }
       
       // Real printer path - keep existing hardcoded values for production
-      const hostname = "V-DS1-G2-0005";
+      const hostname = "V-DS1G2-0014";
       const shareName = "Zebra";
 
       if (!hostname || !shareName) {
